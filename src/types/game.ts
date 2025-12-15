@@ -5,6 +5,8 @@ export interface IPLPlayer {
     country: string;
     isOverseas: boolean;
     basePrice: number;
+    setNo: number;
+    setCode: string;
     stats: Record<string, string | number>;
 }
 
