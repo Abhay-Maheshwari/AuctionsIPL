@@ -41,8 +41,10 @@ export default function LobbyPage() {
         }
     };
 
-    const allReady = room?.teams.every((t: TeamInfo) => t.isReady) ?? false;
-    const canStart = room && room.teams.length >= 2 && allReady;
+    const occupiedTeams = room?.teams.filter((t: TeamInfo) => t.ownerId) || [];
+    const allReady = occupiedTeams.every((t: TeamInfo) => t.isReady) && occupiedTeams.length > 0;
+    // Need at least 2 human players
+    const canStart = room && occupiedTeams.length >= 2 && allReady;
 
     if (!room) {
         return (
@@ -270,7 +272,7 @@ export default function LobbyPage() {
                 {/* Start requirements */}
                 {isHost && !canStart && (
                     <div className="text-center text-slate-500 text-xs font-bold uppercase tracking-wider">
-                        {room.teams.length < 2
+                        {occupiedTeams.length < 2
                             ? 'Need at least 2 teams to start'
                             : 'All teams must be ready to start'
                         }

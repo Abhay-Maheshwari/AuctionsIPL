@@ -4,20 +4,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { Gavel, Users, Sparkles, Trophy, Zap, ArrowRight, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { Users, Sparkles, Trophy, Zap, ArrowRight, Loader2 } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
 import { useSocket } from '@/contexts/SocketContext';
-
-const TEAM_COLORS = [
-    '#dc2626', // Red
-    '#ea580c', // Orange
-    '#ca8a04', // Yellow
-    '#16a34a', // Green
-    '#0891b2', // Cyan
-    '#2563eb', // Blue
-    '#7c3aed', // Purple
-    '#db2777', // Pink
-];
+import { IPL_TEAMS } from '@/data/teams';
 
 export default function HomePage() {
     const router = useRouter();
@@ -26,24 +17,33 @@ export default function HomePage() {
 
     const [mode, setMode] = useState<'home' | 'create' | 'join'>('home');
     const [userName, setUserName] = useState('');
-    const [teamName, setTeamName] = useState('');
-    const [teamColor, setTeamColor] = useState(TEAM_COLORS[0]);
+    const [teamId, setTeamId] = useState(IPL_TEAMS[0].id);
+    const [teamName, setTeamName] = useState(IPL_TEAMS[0].name);
+    const [teamColor, setTeamColor] = useState(IPL_TEAMS[0].color);
     const [roomCode, setRoomCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
+
+    // Update team color/name when team selections changes
+    useEffect(() => {
+        const team = IPL_TEAMS.find(t => t.id === teamId);
+        if (team) {
+            setTeamColor(team.color);
+            setTeamName(team.name);
+        }
+    }, [teamId]);
 
     if (!mounted) {
         return null;
     }
 
     const handleCreate = async () => {
-        if (!userName.trim() || !teamName.trim()) {
+        if (!userName.trim() || !teamId) {
             setError('Please fill in all fields');
             return;
         }
@@ -51,7 +51,7 @@ export default function HomePage() {
         setIsLoading(true);
         setError('');
 
-        const result = await createRoom(userName, teamName, teamColor);
+        const result = await createRoom(userName, teamId, teamColor);
 
         if (result.success) {
             router.push('/lobby');
@@ -63,7 +63,7 @@ export default function HomePage() {
     };
 
     const handleJoin = async () => {
-        if (!userName.trim() || !teamName.trim() || !roomCode.trim()) {
+        if (!userName.trim() || !teamId || !roomCode.trim()) {
             setError('Please fill in all fields');
             return;
         }
@@ -71,7 +71,7 @@ export default function HomePage() {
         setIsLoading(true);
         setError('');
 
-        const result = await joinRoom(roomCode.toUpperCase(), userName, teamName, teamColor);
+        const result = await joinRoom(roomCode.toUpperCase(), userName, teamId, teamColor);
 
         if (result.success) {
             router.push('/lobby');
@@ -90,8 +90,8 @@ export default function HomePage() {
             {/* Header */}
             <header className="p-6 relative z-10">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-industrial-primary/10 rounded-sm flex items-center justify-center border border-industrial-primary/30 shadow-[0_0_15px_rgba(255,176,0,0.15)]">
-                        <Gavel className="w-6 h-6 text-industrial-primary" />
+                    <div className="w-12 h-12 bg-industrial-primary/10 rounded-sm flex items-center justify-center border border-industrial-primary/30 shadow-[0_0_15px_rgba(255,176,0,0.15)] relative overflow-hidden">
+                        <Image src="/logo.png" alt="IPL Logo" width={32} height={32} className="object-contain" />
                     </div>
                     <span className="text-xl font-display font-black uppercase tracking-tight text-white/90">
                         IPL Fantasy <span className="text-industrial-primary text-glow">Auction</span>
@@ -252,37 +252,31 @@ export default function HomePage() {
                                     />
                                 </div>
 
-                                {/* Team Name */}
+                                {/* Select Team */}
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Team Name</label>
-                                    <input
-                                        type="text"
-                                        value={teamName}
-                                        onChange={(e) => setTeamName(e.target.value)}
-                                        placeholder="e.g. Chennai Super Kings"
-                                        maxLength={25}
-                                        className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-sm text-white focus:outline-none focus:border-industrial-primary/50 transition-all font-medium placeholder:text-slate-700"
-                                    />
+                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Team</label>
+                                    <div className="relative">
+                                        <select
+                                            value={teamId}
+                                            onChange={(e) => setTeamId(e.target.value)}
+                                            className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-sm text-white focus:outline-none focus:border-industrial-primary/50 transition-all font-medium appearance-none cursor-pointer"
+                                        >
+                                            {IPL_TEAMS.map(team => (
+                                                <option key={team.id} value={team.id} className="bg-slate-900">
+                                                    {team.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <ArrowRight className="w-4 h-4 rotate-90 text-slate-400" />
+                                        </div>
+                                    </div>
                                 </div>
 
-                                {/* Team Color */}
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Team Color</label>
-                                    <div className="flex gap-2 justify-center p-3 bg-black/30 rounded-sm border border-white/5">
-                                        {TEAM_COLORS.map((color) => (
-                                            <button
-                                                key={color}
-                                                onClick={() => setTeamColor(color)}
-                                                className={`w-8 h-8 rounded-sm transition-all relative overflow-hidden ${teamColor === color
-                                                    ? 'ring-2 ring-white scale-110 shadow-[0_0_10px_rgba(255,255,255,0.3)]'
-                                                    : 'hover:scale-105 opacity-70 hover:opacity-100'
-                                                    }`}
-                                                style={{ backgroundColor: color }}
-                                            >
-                                                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
-                                            </button>
-                                        ))}
-                                    </div>
+                                {/* Team Color Display (Read Only or Indicator) */}
+                                <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+                                    <span className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColor }}></span>
+                                    Team Color: {teamColor}
                                 </div>
 
                                 {/* Error */}
