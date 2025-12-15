@@ -1,0 +1,7 @@
+src/app/lobby/page.tsx(30,13): error TS2367: This comparison appears to be unintentional because the types '"waiting" | "ready" | "bidding" | "paused" | "completed" | undefined' and '"live"' have no overlap.
+src/app/lobby/page.tsx(106,95): error TS2339: Property 'budgetPerPlayer' does not exist on type 'GameSettings'.
+src/app/lobby/page.tsx(133,71): error TS2339: Property 'maxPlayers' does not exist on type 'GameSettings'.
+src/app/lobby/page.tsx(140,53): error TS2339: Property 'ownerId' does not exist on type 'TeamInfo'.
+src/app/lobby/page.tsx(193,61): error TS2339: Property 'maxPlayers' does not exist on type 'GameSettings'.
+src/components/PlayerCard.tsx(3,10): error TS2459: Module '"@/contexts/GameContext"' declares 'IPLPlayer' locally, but it is not exported.
+src/components/PlayerCard.tsx(70,105): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.

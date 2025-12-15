@@ -1,0 +1,16 @@
+src/app/auction/page.tsx(84,36): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/app/auction/page.tsx(84,39): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/app/auction/page.tsx(85,35): error TS7006: Parameter 'team' implicitly has an 'any' type.
+src/app/auction/page.tsx(85,41): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/app/auction/page.tsx(249,49): error TS7006: Parameter 'team' implicitly has an 'any' type.
+src/app/auction/page.tsx(280,33): error TS2322: Type '{ player: any; currentBid: any; isOnBlock: boolean; }' is not assignable to type 'IntrinsicAttributes & PlayerCardProps'.
+  Property 'currentBid' does not exist on type 'IntrinsicAttributes & PlayerCardProps'.
+src/app/lobby/page.tsx(43,40): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/app/lobby/page.tsx(138,42): error TS7006: Parameter 'team' implicitly has an 'any' type.
+src/components/PlayerCard.tsx(3,10): error TS2459: Module '"@/contexts/GameContext"' declares 'IPLPlayer' locally, but it is not exported.
+src/components/PlayerCard.tsx(68,105): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/components/TeamPanel.tsx(8,26): error TS2307: Cannot find module '@/types/game' or its corresponding type declarations.
+src/components/TeamPanel.tsx(119,54): error TS7006: Parameter 'ap' implicitly has an 'any' type.
+src/components/TeamPanel.tsx(119,58): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/contexts/GameContext.tsx(14,8): error TS2307: Cannot find module '@/types/game' or its corresponding type declarations.
+src/contexts/GameContext.tsx(249,43): error TS7006: Parameter 't' implicitly has an 'any' type.
