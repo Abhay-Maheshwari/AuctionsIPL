@@ -1,0 +1,58 @@
+/* Industrial Theme Applied */
+@import "tailwindcss";
+
+@theme {
+    --font-sans: var(--font-inter);
+    --color-background: #050505;
+    --color-foreground: #ffffff;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    background-image:
+        linear-gradient(rgba(255, 176, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 176, 0, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(255, 176, 0, 0.15) 0%, transparent 60%);
+    background-size: 50px 50px, 50px 50px, 100% 100%;
+    min-height: 100vh;
+}
+
+@layer utilities {
+    .glass-panel {
+        @apply bg-white/5 backdrop-blur-md border border-white/10;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .industrial-border {
+        @apply border;
+        border-color: rgba(255, 176, 0, 0.3);
+    }
+
+    .text-glow {
+        text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+    }
+
+    .card-shine {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-shine::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+        transition: 0.5s;
+        pointer-events: none;
+    }
+
+    .card-shine:hover::before {
+        left: 100%;
+        transition: 0.7s;
+    }
+}
