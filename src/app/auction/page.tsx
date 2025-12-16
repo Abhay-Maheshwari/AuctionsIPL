@@ -39,16 +39,16 @@ export default function AuctionPage() {
 
     if (!mounted) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-950">
-                <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+            <div className="min-h-screen flex items-center justify-center bg-transparent">
+                <Loader2 className="w-8 h-8 animate-spin text-industrial-primary" />
             </div>
         );
     }
 
     if (!room) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-950">
-                <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+            <div className="min-h-screen flex items-center justify-center bg-transparent">
+                <Loader2 className="w-8 h-8 animate-spin text-industrial-primary" />
             </div>
         );
     }
@@ -67,14 +67,14 @@ export default function AuctionPage() {
     // Completed state
     if (isCompleted) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950 p-4 md:p-8">
+            <div className="min-h-screen bg-transparent p-4 md:p-8">
                 <div className="max-w-6xl mx-auto space-y-8">
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         className="text-center py-12"
                     >
-                        <Trophy className="w-24 h-24 mx-auto text-yellow-400 mb-4" />
+                        <Trophy className="w-24 h-24 mx-auto text-industrial-primary mb-4" />
                         <h1 className="text-4xl font-bold mb-2">Auction Complete!</h1>
                         <p className="text-slate-400">All players have been sold or marked unsold</p>
                     </motion.div>
@@ -90,12 +90,12 @@ export default function AuctionPage() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
                                     className={`
-                    bg-slate-900/80 backdrop-blur rounded-xl p-6 border
-                    ${index === 0 ? 'border-yellow-500/50 ring-2 ring-yellow-500/20' : 'border-slate-700'}
+                    glass-panel rounded-xl p-6 border
+                    ${index === 0 ? 'border-industrial-primary/50 ring-1 ring-industrial-primary/20' : 'border-white/10'}
                   `}
                                 >
                                     <div className="flex items-center gap-3 mb-4">
-                                        {index === 0 && <Trophy className="w-6 h-6 text-yellow-400" />}
+                                        {index === 0 && <Trophy className="w-6 h-6 text-industrial-primary" />}
                                         <div
                                             className="w-8 h-8 rounded-full"
                                             style={{ backgroundColor: team.color }}
@@ -104,11 +104,11 @@ export default function AuctionPage() {
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4 mb-4">
-                                        <div className="bg-slate-800/50 rounded-lg p-3 text-center">
-                                            <div className="text-2xl font-bold text-purple-400">{team.squadCount}</div>
+                                        <div className="bg-white/5 rounded-lg p-3 text-center">
+                                            <div className="text-2xl font-bold text-industrial-accent">{team.squadCount}</div>
                                             <div className="text-xs text-slate-400">Players</div>
                                         </div>
-                                        <div className="bg-slate-800/50 rounded-lg p-3 text-center">
+                                        <div className="bg-white/5 rounded-lg p-3 text-center">
                                             <div className="text-2xl font-bold text-green-400">{formatPrice(team.spent)}</div>
                                             <div className="text-xs text-slate-400">Spent</div>
                                         </div>
@@ -126,7 +126,7 @@ export default function AuctionPage() {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => router.push('/')}
-                            className="py-4 px-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl font-bold text-lg"
+                            className="py-4 px-8 bg-industrial-primary text-black rounded-xl font-bold text-lg hover:bg-yellow-400 transition-colors"
                         >
                             Back to Home
                         </motion.button>
@@ -137,7 +137,7 @@ export default function AuctionPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950 flex flex-col">
+        <div className="min-h-screen flex flex-col">
             {/* Sold Player Overlay */}
             <AnimatePresence>
                 {lastSoldPlayer && (
@@ -263,63 +263,86 @@ export default function AuctionPage() {
                 </AnimatePresence>
 
                 {/* Center - Player on Block */}
-                <div className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
+                <div className="flex-1 flex flex-col items-center justify-center p-4">
                     {playerOnBlock ? (
-                        <div className="w-full max-w-lg space-y-6">
-                            {/* Timer */}
-                            <div className="flex justify-center">
-                                <AuctionTimer
-                                    timeRemaining={timeRemaining}
-                                    maxTime={room.settings.timerDuration}
-                                    isPaused={isPaused}
-                                />
-                            </div>
+                        <div className="glass-panel relative rounded-2xl md:rounded-[32px] p-6 md:p-10 border border-white/10 w-full max-w-sm md:max-w-2xl mx-auto shadow-[0_0_50px_rgba(0,0,0,0.5)] mt-8 md:mt-0">
+                            {/* Decorative corner accents */}
+                            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-industrial-primary/30 rounded-tl-3xl opacity-60"></div>
+                            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-industrial-primary/30 rounded-tr-3xl opacity-60"></div>
+                            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-industrial-primary/30 rounded-bl-3xl opacity-60"></div>
+                            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-industrial-primary/30 rounded-br-3xl opacity-60"></div>
 
-                            {/* Player Card */}
-                            <PlayerCard
-                                player={playerOnBlock.player}
-                                currentBid={playerOnBlock.currentBid}
-                                isOnBlock={true}
-                            />
-
-                            {/* Current Bid Info */}
-                            <div className="text-center space-y-2">
-                                {playerOnBlock.currentTeamName ? (
-                                    <div className="text-lg">
-                                        <span className="text-slate-400">Current bid by </span>
-                                        <span className="text-purple-400 font-bold">{playerOnBlock.currentTeamName}</span>
-                                    </div>
-                                ) : (
-                                    <div className="text-slate-400">No bids yet - Starting at base price</div>
-                                )}
-
-                                <div className="text-3xl font-bold text-green-400">
-                                    {formatPrice(playerOnBlock.currentBid)}
+                            <div className="space-y-4 md:space-y-6 relative z-10">
+                                {/* Timer Node */}
+                                <div className="absolute -top-12 md:-top-16 left-1/2 -translate-x-1/2 transform scale-75 md:scale-100 origin-bottom">
+                                    <AuctionTimer
+                                        timeRemaining={timeRemaining}
+                                        maxTime={room.settings.timerDuration}
+                                        isPaused={isPaused}
+                                    />
                                 </div>
-                            </div>
 
-                            {/* Bid Button */}
-                            {myTeam && !isPaused && (
-                                <BidButton
+                                <div className="h-16 md:h-24 w-full"></div>
+
+                                {/* Player Card */}
+                                <PlayerCard
+                                    player={playerOnBlock.player}
                                     currentBid={playerOnBlock.currentBid}
-                                    myBudget={myTeam.budget - myTeam.spent}
-                                    isMyBid={playerOnBlock.currentTeamId === myTeam.id}
-                                    canBid={myTeam.squadCount < room.settings.squadSize}
-                                    error={error}
-                                    onBid={placeBid}
+                                    isOnBlock={true}
                                 />
-                            )}
 
-                            {isPaused && (
-                                <div className="text-center py-4 text-yellow-400 bg-yellow-500/10 rounded-xl">
-                                    Auction is paused by the host
+                                {/* Current Bid Info */}
+                                <div className="mt-6">
+                                    <div className={`
+                                        bg-gradient-to-r from-transparent via-white/5 to-transparent 
+                                        border-y border-white/10 p-4 text-center backdrop-blur-sm
+                                        ${playerOnBlock.currentTeamId ? 'border-industrial-primary/20 bg-industrial-primary/5' : ''}
+                                    `}>
+                                        {playerOnBlock.currentTeamName ? (
+                                            <div className="space-y-1">
+                                                <div className="text-sm text-slate-400 uppercase tracking-widest">Current Bid By</div>
+                                                <div className="text-xl font-display font-bold text-industrial-primary text-glow">
+                                                    {playerOnBlock.currentTeamName}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="text-slate-400 italic">Starting at Base Price</div>
+                                        )}
+
+                                        <div className="mt-2 text-4xl md:text-5xl font-mono font-bold text-white tracking-tight drop-shadow-xl">
+                                            {formatPrice(playerOnBlock.currentBid)}
+                                        </div>
+                                    </div>
                                 </div>
-                            )}
+
+                                {/* Bid Button Area */}
+                                <div className="flex justify-center pt-2">
+                                    {myTeam && !isPaused && (
+                                        <BidButton
+                                            currentBid={playerOnBlock.currentBid}
+                                            myBudget={myTeam.budget - myTeam.spent}
+                                            isMyBid={playerOnBlock.currentTeamId === myTeam.id}
+                                            canBid={myTeam.squadCount < room.settings.squadSize}
+                                            error={error}
+                                            onBid={placeBid}
+                                        />
+                                    )}
+                                </div>
+
+                                {isPaused && (
+                                    <div className="text-center py-3 bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 rounded-lg">
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Pause className="w-5 h-5" />
+                                            <span className="font-bold">AUCTION PAUSED</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     ) : (
-                        <div className="text-center text-slate-400">
-                            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
-                            Loading next player...
+                        <div className="glass-panel p-12 rounded-2xl text-center text-slate-400">
+                            <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-industrial-primary" />
+                            <h3 className="text-xl font-medium">Preparing Next Player...</h3>
                         </div>
                     )}
                 </div>

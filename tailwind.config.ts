@@ -29,6 +29,16 @@ const config: Config = {
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
                 "industrial-gradient": "linear-gradient(135deg, #1A1A1A 0%, #050505 100%)",
             },
+            keyframes: {
+                shimmer: {
+                    "0%": { transform: "translateX(-100%)", opacity: "0" },
+                    "50%": { opacity: "1" },
+                    "100%": { transform: "translateX(100%)", opacity: "0" },
+                },
+            },
+            animation: {
+                shimmer: "shimmer 2.5s infinite linear",
+            },
         },
     },
     plugins: [],
